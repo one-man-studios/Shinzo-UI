@@ -1,12 +1,6 @@
 # Shinzo-UI
 A robust, single-file AI interface for Ollama and OpenAI. Features local RAG with vector search, real-time voice/video calls, document analysis (PDF/DOCX), and project workspaces. Runs entirely in the browser using IndexedDB for privacy and speed—no external backend required.
 
-# Shinzo UI - Documentation
-
-## 🌟 Overview
-
-Shinzo UI is a powerful, self-contained RAG (Retrieval-Augmented Generation) application that runs entirely in the browser. It provides a modern, feature-rich interface for interacting with AI models, managing knowledge bases, and organizing projects in workspaces.
-
 ## ✨ Key Features
 
 ### 🎯 Core Functionality
