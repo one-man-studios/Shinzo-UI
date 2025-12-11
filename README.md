@@ -130,11 +130,13 @@ Create custom AI models using Modelfile syntax:
 
 ### IndexedDB Structure
 
+```
 superRAG_DB (v5)
 ├── documents (metadata)
 ├── chunks (vector embeddings)
 ├── conversations (chat history)
 └── spaces (workspace configurations)
+```
 
 ### Local Storage
 - Application settings
