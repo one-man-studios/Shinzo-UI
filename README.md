@@ -1,6 +1,12 @@
 # Shinzo-UI
 A robust, single standalone html file AI interface for Ollama and OpenAI. Features local RAG with vector search, real-time voice/video calls, document analysis (PDF/DOCX), and project workspaces. Runs entirely in the browser using IndexedDB for privacy and speed—no external backend required.
 
+## How to use
+* Just download the html file
+* Configure the API, if u have OpenAI's API or Setup Base URL if u use Ollama or Llama.cpp
+* Then you're good to go.
+* Have fun prompting.
+
 ## ✨ Key Features
 
 ### 🎯 Core Functionality
