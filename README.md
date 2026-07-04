@@ -7,210 +7,88 @@ A robust, single standalone html file AI interface for Ollama and OpenAI. Featur
 * Then you're good to go.
 * Have fun prompting.
 
-## ✨ Key Features
+## Highlights
 
-### 🎯 Core Functionality
-- **Chat Interface**: Conversational UI with markdown rendering, code syntax highlighting, and LaTeX support
-- **Knowledge Base**: Document upload & vector storage (PDF, DOCX, TXT, etc.)
-- **Workspace Management**: Containerized project spaces with custom instructions
-- **Model Builder**: Create custom models using Modelfile syntax
-- **Live Web Search**: Real-time internet search integration
+- **100% client-side** — the entire app is one HTML file with inline CSS/JS
+- **Local-first storage** — all chats, documents, and settings are saved in `localStorage` (with automatic one-time migration from an older IndexedDB version); no telemetry, analytics, or external data collection
+- **Bring your own backend** — connects to Ollama, a local llama.cpp/KoboldCpp server, or any OpenAI-compatible API
+- **In-browser embeddings** — Transformers.js running on WebGPU/WASM for local RAG, no external embedding API needed
 
-### 🎨 User Experience
-- Dark mode UI with modern design
-- Responsive layout (mobile & desktop)
-- Voice/Video call capabilities
-- Real-time speech recognition (STT) and synthesis (TTS)
-- Concurrent model conversations
-- Citation and source tracking
+## Features
 
-### 🛠️ Technical Features
-- **Browser-based Vector Database**: IndexedDB storage for documents and conversations
-- **Multiple Embedding Providers**: Ollama, Local (Transformers.js), OpenAI
-- **File Processing**: PDF, DOCX, images, audio, and text files
-- **Export/Import**: Chat history backup and restore
-- **Real-time Search**: Live search across chats and knowledge base
+| Tab | Description |
+|---|---|
+| 💬 Chat | Main conversation interface, streaming responses, image attachments, persona/character support |
+| 🗄️ Knowledge Base | Upload and manage documents for retrieval-augmented generation |
+| 🗂️ RAG Spaces | Group documents into named retrieval spaces |
+| 🚀 Spaces | Project-style workspaces with linked files, links, instructions, and dedicated chat history |
+| 📚 Prompt Library | Save, browse, and reuse prompt templates with `{{variable}}` placeholders |
+| 🧱 Model Builder | Configure and customize model presets |
+| 🕸️ Graph | Visual/graph-based view (D3.js) |
+| 🛠️ Offline Tools | Summarizer, flashcard generator, translator, code explainer, and writing assistant — all run through your configured model |
+| ⚙️ Settings | Backend connection, chat behavior, persona/World Info, storage stats, and theming |
 
-## 🚀 Quick Start
+### Offline Tools in detail
 
-### Prerequisites
-- Modern web browser (Chrome/Firefox/Edge)
-- Ollama server (optional, for local AI models)
-- Internet connection (for CDN dependencies)
+- **Summarizer** — bullet/paragraph/TL;DR/ELI5/academic styles, adjustable length
+- **Flashcard generator** — produces study cards from notes, with a flip-card study mode and CSV export
+- **Translator** — translate text with selectable tone/style, including custom target languages
+- **Code assistant** — explain, review, optimize, document, test, or debug code
+- **Writing assistant** — improve clarity, fix grammar, adjust tone (formal/casual), shorten, expand, or continue text
 
-### Installation
-1. Download the `Shinzo UI.html` file
-2. Open it directly in your browser
-3. Configure your API settings (Settings tab)
+Each tool's output can be sent directly into the Chat tab for follow-up.
 
-### Basic Configuration
-1. Set your API URL (default: `http://localhost:11434` for Ollama)
-2. Configure embedding provider (Ollama recommended for local use)
-3. Set up web search API key (optional, for live search)
+## Supported backends
 
-## 📁 File Structure
+Configured in **Settings → API URL / Backend Type**:
 
-The application is a single HTML file containing:
-- **HTML5**: Structure and layout
-- **CSS3**: Styling with CSS variables for theming
-- **JavaScript**: Complete application logic
-- **Embedded Libraries**:
-  - Font Awesome (icons)
-  - KaTeX (mathematical rendering)
-  - Marked.js (markdown parsing)
-  - DOMPurify (HTML sanitization)
-  - PDF.js (PDF processing)
-  - jsPDF (PDF generation)
-  - Mammoth (DOCX processing)
+| Backend | Default endpoint pattern |
+|---|---|
+| Ollama | `http://localhost:11434` (`/api/tags`, `/api/chat`) |
+| Local Server (llama.cpp / KoboldCpp) | `/api/v1/model`, `/api/v1/generate` |
+| OpenAI-compatible | `/v1/models`, `/v1/chat/completions` |
 
-## 🎮 Usage Guide
+The app auto-detects available models from the connected backend and shows a live connection status indicator.
 
-### Starting a Chat
-1. Click "New Chat" in the sidebar
-2. Select your primary model from the dropdown
-3. Type your message or use voice input
-4. Toggle web search for real-time information
+## Getting started
 
-### Managing Knowledge Base
-1. Navigate to "Knowledge" tab
-2. Upload documents using the upload button
-3. Documents are automatically chunked and embedded
-4. Use `#` symbol in chats to trigger RAG context
+1. Download `shinzo_ui_v5.html`.
+2. Open it directly in a modern browser (Chrome/Edge recommended for WebGPU support), or serve it via any static file server.
+3. Start your local LLM backend (e.g. `ollama serve`, or a llama.cpp/KoboldCpp/OpenAI-compatible server).
+4. Go to **Settings**, enter the API URL and backend type, and select a model.
+5. Start chatting.
 
-### Creating Workspaces
-1. Go to "Spaces" tab
-2. Click "Create Space"
-3. Add custom instructions and files
-4. Start space-specific chats
+No installation, build tools, or package manager required.
 
-### Voice/Video Calls
-1. Click phone or video icon in chat header
-2. Grant microphone/camera permissions
-3. Speak naturally - VAD (Voice Activity Detection) automatically detects speech
-4. Toggle mute/video during calls
+## Data & privacy
 
-## ⚙️ Configuration Options
+- All chat history, documents, personas, and settings are stored in your browser's `localStorage`.
+- Nothing is sent anywhere except the LLM API endpoint you configure yourself.
+- Storage usage is visible under **Settings → Privacy/Storage**, along with counts of chats, messages, and documents.
+- Because `localStorage` has a practical size limit (typically ~5–10MB per origin, browser-dependent), very large chat histories or document sets may hit quota limits — the app will warn on write failures.
 
-### API Settings
-- **API URL**: Backend server address (Ollama, OpenAI, etc.)
-- **API Key**: Authentication token
-- **Embedding Provider**: Ollama, Local browser, or OpenAI
-- **Chunk Size**: Document processing size (default: 1000)
-- **Top K Results**: RAG retrieval count (default: 3)
+## Tech stack
 
-### Web Search
-- **Serper API Key**: For enhanced search results
-- **Proxy Mode**: CORS or custom proxy for web scraping
+Loaded via CDN, no bundler:
 
-### Voice Settings
-- **STT Endpoint**: Speech-to-text API endpoint
-- **TTS Endpoint**: Text-to-speech API endpoint
-- **VAD Enabled**: Voice activity detection
-- **Playback Speed**: Audio playback rate
+- [marked](https://github.com/markedjs/marked) + [DOMPurify](https://github.com/cure53/DOMPurify) — Markdown rendering
+- [KaTeX](https://katex.org/) — math rendering
+- [Mermaid](https://mermaid.js.org/) — diagrams
+- [PDF.js](https://mozilla.github.io/pdf.js/) — PDF parsing
+- [Mammoth.js](https://github.com/mwilliamson/mammoth.js) — `.docx` parsing
+- [D3.js](https://d3js.org/) — graph visualization
 
-## 🔧 Advanced Features
+## Themes
 
-### Model Builder
-Create custom AI models using Modelfile syntax:
-1. Navigate to "Model Builder" tab
-2. Select base model
-3. Define system prompt and parameters
-4. Click "Create Model"
+Includes multiple built-in color themes (default dark, Mocha, Discord, Matrix, Purple, and others), switchable from Settings and persisted across sessions.
 
-### Concurrent Conversations
-- Toggle concurrent mode to use two models simultaneously
-- Each model responds independently for comparison
-
-### Export/Import
-- Export chat history as JSON
-- Import previous conversations
-- Archive chats for organization
-
-## 🗂️ Data Storage
-
-### IndexedDB Structure
-
-```
-superRAG_DB (v5)
-├── documents (metadata)
-├── chunks (vector embeddings)
-├── conversations (chat history)
-└── spaces (workspace configurations)
-```
-
-### Local Storage
-- Application settings
-- UI preferences
-- Connection configurations
-
-## 🔐 Security Notes
-
-### Data Privacy
-- All data stored locally in browser
-- No external data transmission unless configured
-- API keys stored in browser local storage
-
-### File Processing
-- Documents processed client-side
-- Images converted to base64 for attachments
-- TXT/PDF/DOCX parsing happens in browser
-
-## 🌐 CDN Dependencies
-
-The application loads these libraries from CDN:
-- **Font Awesome 6.5.1** (icons)
-- **KaTeX 0.16.9** (math rendering)
-- **Marked.js** (markdown)
-- **DOMPurify 3.0.6** (security)
-- **PDF.js 3.11.174** (PDF processing)
-- **jsPDF 2.5.1** (PDF generation)
-- **Mammoth 1.6.0** (DOCX processing)
-- **Transformers.js** (for local embeddings)
-
-## 🐛 Troubleshooting
-
-### Common Issues
-
-1. **Connection Failed**
-   - Verify Ollama server is running
-   - Check API URL in settings
-   - Disable browser CORS restrictions if needed
-
-2. **File Upload Issues**
-   - Check file size limits
-   - Ensure supported file types
-   - Try smaller chunks in settings
-
-3. **Voice Features Not Working**
-   - Grant microphone permissions
-   - Check STT/TTS endpoint configuration
-   - Verify browser supports WebRTC
-
-### Browser Compatibility
-- Chrome 90+ (recommended)
-- Firefox 88+
-- Edge 90+
-- Safari 14.1+
-
-## 📝 Development
-
-### Customization
-- Modify CSS variables in `:root` for theming
-- Extend VectorDB class for different storage backends
-- Add new file processors in `extractTextFromFile()`
-
-### Adding Features
-1. New view sections can be added to HTML
-2. Extend `app` object with new methods
-3. Update sidebar navigation accordingly
-
-## 📄 License
+## License
 
 Created by [One Man Studios](https://github.com/one-man-studios)
 
 This project is provided as-is for educational and personal use. Commercial use is strictly prohibited.
 
-## 🤝 Contributing
+## Contributing
 
 Feel free to:
 1. Fork the repository
